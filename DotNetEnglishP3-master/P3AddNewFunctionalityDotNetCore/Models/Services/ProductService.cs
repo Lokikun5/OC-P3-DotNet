@@ -91,42 +91,42 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Services
         }
 
         // TODO this is an example method, remove it and perform model validation using data annotations
+        // Validate product creation fields and return localized error messages.
         public List<string> CheckProductModelErrors(ProductViewModel product)
         {
             List<string> modelErrors = new List<string>();
-            if (product.Name == null || string.IsNullOrWhiteSpace(product.Name))
+
+            if (string.IsNullOrWhiteSpace(product.Name))
             {
                 modelErrors.Add(_localizer["MissingName"]);
             }
 
-            if (product.Price == null || string.IsNullOrWhiteSpace(product.Price))
+            if (string.IsNullOrWhiteSpace(product.Price))
             {
                 modelErrors.Add(_localizer["MissingPrice"]);
             }
-
-            if (!Double.TryParse(product.Price, out double pc))
+            else if (!double.TryParse(product.Price, out double price)
+                || double.IsNaN(price)
+                || double.IsInfinity(price))
             {
                 modelErrors.Add(_localizer["PriceNotANumber"]);
             }
-            else
+            else if (price <= 0)
             {
-                if (pc <= 0)
-                    modelErrors.Add(_localizer["PriceNotGreaterThanZero"]);
+                modelErrors.Add(_localizer["PriceNotGreaterThanZero"]);
             }
 
-            if (product.Stock == null || string.IsNullOrWhiteSpace(product.Stock))
+            if (string.IsNullOrWhiteSpace(product.Stock))
             {
-                modelErrors.Add(_localizer["MissingQuantity"]);
+                modelErrors.Add(_localizer["MissingStock"]);
             }
-
-            if (!int.TryParse(product.Stock, out int qt))
+            else if (!int.TryParse(product.Stock, out int quantity))
             {
                 modelErrors.Add(_localizer["StockNotAnInteger"]);
             }
-            else
+            else if (quantity <= 0)
             {
-                if (qt <= 0)
-                    modelErrors.Add(_localizer["StockNotGreaterThanZero"]);
+                modelErrors.Add(_localizer["StockNotGreaterThanZero"]);
             }
 
             return modelErrors;
