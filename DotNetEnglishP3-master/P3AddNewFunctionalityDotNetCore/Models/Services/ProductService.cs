@@ -91,7 +91,7 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Services
         }
 
         // TODO this is an example method, remove it and perform model validation using data annotations
-        // Validate product creation fields and return localized error messages.
+        // FIX Validate product creation fields and return localized error messages.
         public List<string> CheckProductModelErrors(ProductViewModel product)
         {
             List<string> modelErrors = new List<string>();
