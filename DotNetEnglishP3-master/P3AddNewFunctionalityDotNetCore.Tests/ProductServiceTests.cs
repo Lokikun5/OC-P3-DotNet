@@ -78,6 +78,27 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
             Assert.Empty(errors);
         }
 
+        [Fact]
+        public void CheckProductModelErrors_WhenMultipleFieldsAreInvalid_ReturnsAllErrors()
+        {
+            // Arrange
+            var product = new ProductViewModel
+            {
+                Name = "",
+                Price = "abc",
+                Stock = "0"
+            };
+
+            // Act
+            var errors = _productService.CheckProductModelErrors(product);
+
+            // Assert
+            Assert.Equal(3, errors.Count);
+            Assert.Contains("MissingName", errors);
+            Assert.Contains("PriceNotANumber", errors);
+            Assert.Contains("StockNotGreaterThanZero", errors);
+        }
+
         #endregion
 
         #region Price validation tests
