@@ -1,28 +1,44 @@
 ﻿@model P3AddNewFunctionalityDotNetCore.Models.ViewModels.ProductViewModel
+
 @{
     ViewData["Title"] = Localizer["CreatProductTitle"];
     Layout = "_AdminLayout";
 }
 
-<div asp-validation-summary="All" class="text-danger"></div>
-<form asp-action="Create" method="post">
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+<form asp-action="Create" method="post" class="mt-5">
     <div class="mb-3 col-6">
-        <label>@Localizer["Name"]*:</label><input asp-for="Name" class="form-control" />
+        <label asp-for="Name">@Localizer["Name"]*:</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger d-block"></span>
     </div>
+
     <div class="mb-3 col-4">
-        <label>@Localizer["Price"]*:</label><input asp-for="Price" class="form-control" />
+        <label asp-for="Price">@Localizer["Price"]*:</label>
+        <input asp-for="Price" class="form-control" />
+        <span asp-validation-for="Price" class="text-danger d-block"></span>
     </div>
+
     <div class="mb-3 col-8">
-        <label>@Localizer["Description"]:</label><input asp-for="Description" class="form-control" />
+        <label asp-for="Description">@Localizer["Description"]:</label>
+        <input asp-for="Description" class="form-control" />
     </div>
+
     <div class="mb-3 col-4">
-        <label>@Localizer["Stock"]*:</label><input asp-for="Stock" type="text" class="form-control" />
+        <label asp-for="Stock">@Localizer["Stock"]*:</label>
+        <input asp-for="Stock" type="text" class="form-control" />
+        <span asp-validation-for="Stock" class="text-danger d-block"></span>
     </div>
-    <div class="mb-3col-8">
-        <label>@Localizer["Details"]:</label><input asp-for="Details" class="form-control" />
+
+    <div class="mb-3 col-8">
+        <label asp-for="Details">@Localizer["Details"]:</label>
+        <input asp-for="Details" class="form-control" />
     </div>
-    <div class="text-center">
-        <input class="btn btn-primary" type="submit" value="@Localizer["OK"]" />
+
+    <div class="col-8 d-flex justify-content-end mt-3">
+        <input class="btn btn-primary"
+               type="submit"
+               value="@Localizer["OK"]" />
     </div>
 </form>
-

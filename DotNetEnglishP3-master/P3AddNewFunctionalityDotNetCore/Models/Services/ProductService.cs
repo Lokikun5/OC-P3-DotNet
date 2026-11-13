@@ -94,42 +94,62 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Services
         // FIX Validate product creation fields and return localized error messages.
         public List<string> CheckProductModelErrors(ProductViewModel product)
         {
-            List<string> modelErrors = new List<string>();
+            return CheckProductModelErrorsByField(product).Values.ToList();
+        }
+
+        public Dictionary<string, string> CheckProductModelErrorsByField(
+            ProductViewModel product)
+        {
+            var errors = new Dictionary<string, string>();
 
             if (string.IsNullOrWhiteSpace(product.Name))
             {
-                modelErrors.Add(_localizer["MissingName"]);
+                errors.Add(
+                    nameof(ProductViewModel.Name),
+                    _localizer["MissingName"]);
             }
 
             if (string.IsNullOrWhiteSpace(product.Price))
             {
-                modelErrors.Add(_localizer["MissingPrice"]);
+                errors.Add(
+                    nameof(ProductViewModel.Price),
+                    _localizer["MissingPrice"]);
             }
             else if (!double.TryParse(product.Price, out double price)
                 || double.IsNaN(price)
                 || double.IsInfinity(price))
             {
-                modelErrors.Add(_localizer["PriceNotANumber"]);
+                errors.Add(
+                    nameof(ProductViewModel.Price),
+                    _localizer["PriceNotANumber"]);
             }
             else if (price <= 0)
             {
-                modelErrors.Add(_localizer["PriceNotGreaterThanZero"]);
+                errors.Add(
+                    nameof(ProductViewModel.Price),
+                    _localizer["PriceNotGreaterThanZero"]);
             }
 
             if (string.IsNullOrWhiteSpace(product.Stock))
             {
-                modelErrors.Add(_localizer["MissingStock"]);
+                errors.Add(
+                    nameof(ProductViewModel.Stock),
+                    _localizer["MissingStock"]);
             }
             else if (!int.TryParse(product.Stock, out int quantity))
             {
-                modelErrors.Add(_localizer["StockNotAnInteger"]);
+                errors.Add(
+                    nameof(ProductViewModel.Stock),
+                    _localizer["StockNotAnInteger"]);
             }
             else if (quantity <= 0)
             {
-                modelErrors.Add(_localizer["StockNotGreaterThanZero"]);
+                errors.Add(
+                    nameof(ProductViewModel.Stock),
+                    _localizer["StockNotGreaterThanZero"]);
             }
 
-            return modelErrors;
+            return errors;
         }
 
         public void SaveProduct(ProductViewModel product)

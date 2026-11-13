@@ -40,11 +40,12 @@ namespace P3AddNewFunctionalityDotNetCore.Controllers
         [HttpPost]
         public IActionResult Create(ProductViewModel product)
         {
-            List<string> modelErrors = _productService.CheckProductModelErrors(product);           
+            var modelErrors =
+                _productService.CheckProductModelErrorsByField(product);
 
-            foreach (string error in modelErrors)
+            foreach (var error in modelErrors)
             {
-                ModelState.AddModelError("", error);
+                ModelState.AddModelError(error.Key, error.Value);
             }
 
             if (ModelState.IsValid)
@@ -52,10 +53,8 @@ namespace P3AddNewFunctionalityDotNetCore.Controllers
                 _productService.SaveProduct(product);
                 return RedirectToAction("Admin");
             }
-            else
-            {
-                return View(product);
-            }
+
+            return View(product);
         }
 
         [Authorize]

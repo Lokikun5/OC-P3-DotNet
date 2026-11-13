@@ -179,6 +179,15 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
             Assert.Contains("PriceNotANumber", errors);
             Assert.Contains("StockNotGreaterThanZero", errors);
 
+            // Vérifier que chaque erreur est associée au bon champ
+            Assert.Equal(
+                "PriceNotANumber",
+                Assert.Single(_controller.ModelState["Price"].Errors).ErrorMessage);
+
+            Assert.Equal(
+                "StockNotGreaterThanZero",
+                Assert.Single(_controller.ModelState["Stock"].Errors).ErrorMessage);
+
             // Aucun enregistrement en base
             _context.ChangeTracker.Clear();
             Assert.Empty(_context.Product.AsNoTracking().ToList());
