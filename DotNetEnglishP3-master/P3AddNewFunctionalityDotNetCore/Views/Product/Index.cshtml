@@ -32,12 +32,25 @@
                     <td style="text-align:center">@p.Price</td>
                     <td style="text-align:center">@p.Stock</td>
                     <td>
-                        <form id="@p.Id" asp-action="AddToCart" asp-controller="Cart" method="post">
-                            <input type="hidden" name="id" value="@p.Id" />
-                            <button type="submit" class="btn btn-primary">
-                                @Localizer["AddToCart"]
+                        @if (int.TryParse(p.Stock, out int stock) && stock > 0)
+                        {
+                            <form id="@p.Id"
+                                  asp-action="AddToCart"
+                                  asp-controller="Cart"
+                                  method="post">
+                                <input type="hidden" name="id" value="@p.Id" />
+
+                                <button type="submit" class="btn btn-primary">
+                                    @Localizer["AddToCart"]
+                                </button>
+                            </form>
+                        }
+                        else
+                        {
+                            <button type="button" class="btn btn-secondary" disabled>
+                                @Localizer["OutOfStock"]
                             </button>
-                        </form>
+                        }
                     </td>
                 </tr>
             }

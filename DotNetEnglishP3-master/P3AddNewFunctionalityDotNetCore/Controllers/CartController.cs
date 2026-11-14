@@ -28,15 +28,27 @@ namespace P3AddNewFunctionalityDotNetCore.Controllers
         {
             Product product = _productService.GetProductById(id);
 
-            if (product != null)
-            {
-                _cart.AddItem(product, 1);
-                return RedirectToAction("Index");
-            }
-            else
+            if (product == null)
             {
                 return RedirectToAction("Index", "Product");
             }
+
+            var cart = (Cart)_cart;
+
+            int quantityInCart = cart.Lines
+                .Where(line => line.Product.Id == id)
+                .Sum(line => line.Quantity);
+
+            if (quantityInCart + 1 > product.Quantity)
+            {
+                // La vue utilisera cette clé pour afficher le message traduit.
+                TempData["StockError"] = "InsufficientStock";
+                return RedirectToAction("Index");
+            }
+
+            _cart.AddItem(product, 1);
+
+            return RedirectToAction("Index");
         }
 
         public RedirectToActionResult RemoveFromCart(int id)

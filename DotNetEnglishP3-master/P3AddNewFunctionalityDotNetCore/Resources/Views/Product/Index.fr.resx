@@ -126,6 +126,9 @@
   <data name="Name" xml:space="preserve">
     <value>Nom</value>
   </data>
+  <data name="OutOfStock" xml:space="preserve">
+    <value>Rupture de stock</value>
+  </data>
   <data name="Price" xml:space="preserve">
     <value>Prix</value>
   </data>

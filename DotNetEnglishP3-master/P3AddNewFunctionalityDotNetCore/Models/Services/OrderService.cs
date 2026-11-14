@@ -33,8 +33,12 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Services
         public void SaveOrder(OrderViewModel order)
         {
             var orderToAdd = MapToOrderEntity(order);
+
+            // Le repository enregistre aussi la diminution du stock.
             _orderRepository.Save(orderToAdd);
-             UpdateInventory();
+
+            // Vider le panier uniquement après la réussite.
+            _cart.Clear();
         }
 
         private static Order MapToOrderEntity(OrderViewModel order)
@@ -58,10 +62,5 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Services
             return orderToAdd;
         }
 
-        private void UpdateInventory()
-        {
-            _productService.UpdateProductQuantities();
-            _cart.Clear();
-        }
     }
 }

@@ -120,4 +120,7 @@
   <data name="CartEmpty" xml:space="preserve">
     <value>Lo sentimos, su cesta está vacía !</value>
   </data>
+  <data name="InsufficientStock" xml:space="preserve">
+    <value> No se puede realizar el pedido: un producto no está disponible o no hay suficientes existencias. Revise su carrito.</value>
+  </data>
 </root>

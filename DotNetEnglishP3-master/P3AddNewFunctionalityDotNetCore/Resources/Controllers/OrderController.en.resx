@@ -120,4 +120,7 @@
   <data name="CartEmpty" xml:space="preserve">
     <value>Sorry, your cart is empty !</value>
   </data>
+  <data name="InsufficientStock" xml:space="preserve">
+    <value>Unable to place the order: a product is unavailable or has insufficient stock. Please review your cart.</value>
+  </data>
 </root>

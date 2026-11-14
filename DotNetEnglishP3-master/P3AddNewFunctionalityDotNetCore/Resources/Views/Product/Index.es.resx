@@ -126,6 +126,9 @@
   <data name="Name" xml:space="preserve">
     <value>Nombre</value>
   </data>
+  <data name="OutOfStock" xml:space="preserve">
+    <value>Agotado</value>
+  </data>
   <data name="Price" xml:space="preserve">
     <value>Precio</value>
   </data>

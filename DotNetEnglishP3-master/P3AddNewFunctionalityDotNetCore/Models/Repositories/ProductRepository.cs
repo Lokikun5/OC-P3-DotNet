@@ -1,15 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using P3AddNewFunctionalityDotNetCore.Data;
 using P3AddNewFunctionalityDotNetCore.Models.Entities;
+using P3AddNewFunctionalityDotNetCore.Models.Exceptions;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using P3AddNewFunctionalityDotNetCore.Models.Exceptions;
 
 namespace P3AddNewFunctionalityDotNetCore.Models.Repositories
 {
     public class ProductRepository : IProductRepository
     {
-        private static P3Referential _context;
+        private readonly P3Referential _context;
 
         public ProductRepository(P3Referential context)
         {
@@ -40,16 +42,18 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Repositories
         /// </summary>
         public void UpdateProductStocks(int id, int quantityToRemove)
         {
-            Product product = _context.Product.First(p => p.Id == id);
-            product.Quantity = product.Quantity - quantityToRemove;
+            Product product = _context.Product
+                .SingleOrDefault(product => product.Id == id);
 
-            if (product.Quantity == 0)
-                _context.Product.Remove(product);
-            else
+            if (product == null
+                || quantityToRemove <= 0
+                || quantityToRemove > product.Quantity)
             {
-                _context.Product.Update(product);
-                _context.SaveChanges();
-            }   
+                throw new InsufficientStockException();
+            }
+
+            product.Quantity -= quantityToRemove;
+            _context.SaveChanges();
         }
 
         public void SaveProduct(Product product)
