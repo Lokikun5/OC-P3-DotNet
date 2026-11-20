@@ -73,6 +73,13 @@ Ne pas publier de mots de passe ou de chaînes de connexion contenant des secret
 
 L’adresse et le port dépendent du profil de lancement sélectionné. Les actions d’administration présentées nécessitent une authentification.
 
+### Compte administrateur de démonstration
+
+Pour accéder au module d’administration en local, utiliser les identifiants du compte créé au démarrage :
+
+- **Nom d’utilisateur :** `Admin`
+- **Mot de passe :** `P@ssword123`
+
 ## Validation de la création d’un produit
 
 La méthode `ProductService.CheckProductModelErrors` reçoit un `ProductViewModel` et retourne une liste de messages d’erreur localisés.
